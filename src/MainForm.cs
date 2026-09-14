@@ -11,18 +11,8 @@ namespace PlotThoseLines
             InitializeComponent();
             LoadMenu();
 
-            //// 1. Création et ancrage du graphique en plein écran
             plot = new FormsPlot { Dock = DockStyle.Fill };
             Controls.Add(plot);
-
-            //// 2. Ajout de données d'exemple
-            //double[] testData = { 12.5, 14.0, 11.8, 15.2, 13.9, 16.0, 12, 2143, 54, 3543, 5, 43, 5, 435, 34, 5, 34, 5, 435, 34, 3, 43, 4, 3 };
-            //plot.Plot.Add.Signal(testData);
-            //double[] testData2 = { 12.52, 14.20, 121.8, 15.22, 213.9, 126.0, 12, 2143, 524, 3543,2, 43, 52, 435, 324, 5, 342, 5, 435, 34, 3, 43, 42, 3 };
-            //plot.Plot.Add.Signal(testData2);
-
-            //// 3. Rafraîchissement du tracé
-            //plot.Refresh();
         }
         public void LoadMenu()
         {
@@ -48,16 +38,16 @@ namespace PlotThoseLines
             };
             if (choiceDialog.ShowDialog() == DialogResult.OK)
             {
-                // Pour l'axe X (Date)
+                // pour l'axe y (date)
                 string[] aliasDate = { "date", "timestamp", "datetime", "time" };
 
-                // Pour l'axe Y (Valeur par défaut)
+                // pour l'axe y (valeur)
                 string[] aliasPrix = { "market_cap", "cap", "market" };
                 try
                 {
                     string extension = Path.GetExtension(choiceDialog.FileName).ToLower();
                     string serieName = Path.GetFileNameWithoutExtension(choiceDialog.FileName);
-                    List<DataPoint<double>> points = new();
+                    List<DataPoint<double>> points = new(); 
 
                     if (extension == ".csv")
                     {
