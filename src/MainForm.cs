@@ -52,7 +52,7 @@ namespace PlotThoseLines
                 string[] aliasDate = { "date", "timestamp", "datetime", "time" };
 
                 // Pour l'axe Y (Valeur par défaut)
-                string[] aliasPrix = { "adj close", "adj_close", "close", "price", "valeur" };
+                string[] aliasPrix = { "market_cap", "cap", "market" };
                 try
                 {
                     string extension = Path.GetExtension(choiceDialog.FileName).ToLower();
@@ -101,7 +101,10 @@ namespace PlotThoseLines
                     plot.Refresh();
                 }
 
-                catch (Exception ex) { }
+                catch (Exception ex) 
+                {
+                    MessageBox.Show($"Erreur lors de la lecture du fichier :\n{ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
         }
