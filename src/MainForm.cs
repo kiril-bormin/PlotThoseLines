@@ -34,7 +34,7 @@ namespace PlotThoseLines
             menuFichier.DropDownItems.Add(itemImporter); // Ajout du bouton au sous-menu
             menuStrip.Items.Add(menuFichier); // Ajout du bouton au menu 
 
-            itemImporter.Click += (sender, e) => ImportFile(); // 
+            itemImporter.Click += (sender, e) => ImportFile();
 
             this.MainMenuStrip = menuStrip; // déclaration du menu 
             this.Controls.Add(menuStrip); // ajout visuel
@@ -56,9 +56,8 @@ namespace PlotThoseLines
                 try
                 {
                     string extension = Path.GetExtension(choiceDialog.FileName).ToLower();
-
-                    List<double> valeurs = new();
-                    List<double> dates = new();
+                    string serieName = Path.GetFileNameWithoutExtension(choiceDialog.FileName);
+                    List<DataPoint<double>> points = new();
 
                     if (extension == ".csv")
                     {
@@ -85,14 +84,18 @@ namespace PlotThoseLines
 
                             if (dateOk && valOk)
                             {
-                                dates.Add(dt.ToOADate());
-                                valeurs.Add(val);
+                                points.Add(new DataPoint<double>(dt, val));
                             }
-
                         }
 
+                        // création de datasérie
+                        DataSerie<double> Serie = DataSerie<double>.From(serieName, points);
+                        double[] x = Serie.Dates.Select(x => x.ToOADate()).ToArray();
+                        double[] y = Serie.Values.ToArray();
+
+                        var scottSerie = plot.Plot.Add.Scatter(x, y); // affichage de la sérrie
+                        scottSerie.LegendText = serieName; // affichage la légende
                     }
-                    plot.Plot.Add.Scatter(dates.ToArray(), valeurs.ToArray());
                     plot.Plot.Axes.DateTimeTicksBottom();
                     plot.Plot.Axes.AutoScale();
                     plot.Refresh();
