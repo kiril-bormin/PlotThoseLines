@@ -7,12 +7,12 @@
       "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\mainform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
-      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:mainform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\dataserie.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,8 +23,8 @@
       "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:datapoint.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\mainform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:mainform.resx||{81828910-B8B3-4D2B-99A3-067027C180C1}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\obj\\Debug\\net8.0-windows\\.NETCoreApp,Version=v8.0.AssemblyAttributes.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -52,7 +52,7 @@
               "RelativeDocumentMoniker": "MainForm.cs",
               "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\MainForm.cs",
               "RelativeToolTip": "MainForm.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAAEEAAAAAAAAAAAAuwFwAAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-09-07T08:15:46.462Z",
               "IsPinned": true,
@@ -60,14 +60,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "MainForm.resx",
               "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\MainForm.resx",
               "RelativeDocumentMoniker": "MainForm.resx",
               "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\MainForm.resx",
               "RelativeToolTip": "MainForm.resx",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001005|",
-              "WhenOpened": "2026-09-07T08:12:49.312Z"
+              "WhenOpened": "2026-09-07T08:12:49.312Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -101,9 +102,10 @@
               "RelativeDocumentMoniker": "DataSerie.cs",
               "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\DataSerie.cs",
               "RelativeToolTip": "DataSerie.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABcAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-07T06:41:05.508Z"
+              "WhenOpened": "2026-09-07T06:41:05.508Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
@@ -113,32 +115,35 @@
               "RelativeDocumentMoniker": "DataPoint.cs",
               "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\DataPoint.cs",
               "RelativeToolTip": "DataPoint.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-07T06:37:34.731Z"
+              "WhenOpened": "2026-09-07T06:37:34.731Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
               "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\Program.cs",
               "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-07T06:23:47.357Z"
+              "WhenOpened": "2026-09-07T06:23:47.357Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MainForm.cs [Conception]",
               "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\MainForm.cs",
               "RelativeDocumentMoniker": "MainForm.cs",
               "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\MainForm.cs [Conception]",
               "RelativeToolTip": "MainForm.cs [Conception]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-31T08:34:57.296Z"
+              "WhenOpened": "2026-08-31T08:34:57.296Z",
+              "EditorCaption": " [Conception]"
             }
           ]
         }

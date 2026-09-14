@@ -9,7 +9,7 @@ namespace PlotThoseLines
     public class DataPoint<Type>
     {
         public DateTime Timestamp { get; }
-        public Type Value { get; }
+        public Type Value { get; } 
         public DataPoint(DateTime timestamp, Type value)
         {
             Timestamp = timestamp;
