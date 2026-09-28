@@ -1,5 +1,6 @@
 using ScottPlot.WinForms;
 using System.Globalization;
+using System.Text.Json;
 
 namespace PlotThoseLines
 {
@@ -8,13 +9,21 @@ namespace PlotThoseLines
         private FormsPlot plot;
         private CheckedListBox seriesList;
 
-        // stocke les séries ajoutées dans ScottPlot
+        // Stocke les séries ajoutées dans ScottPlot
         private readonly Dictionary<string, ScottPlot.Plottables.Scatter> plotSeries = new();
+
+        // Liste des séries sauvegardées
+        private readonly List<SavedSerie> savedSeries = new();
+
+        // Chemin de fichier
+        private readonly string savePath = Path.Combine(Application.LocalUserAppDataPath, "data.json");
+
+        private bool isLoadingData = false;
         public MainForm()
         {
             InitializeComponent();
 
-            // instancier la liste des graphiques
+            // Instancier la liste des graphiques
             seriesList = new CheckedListBox
             {
                 Dock = DockStyle.Fill,
@@ -50,6 +59,7 @@ namespace PlotThoseLines
             Controls.Add(splitContainer);
 
             LoadMenu();
+            LoadData();
         }
         // Charger le menu ruban
         public void LoadMenu()
@@ -57,9 +67,9 @@ namespace PlotThoseLines
             MenuStrip menuStrip = new MenuStrip
             {
                 Dock = DockStyle.Top
-            }; // instancier le menu
+            }; // Instancier le menu
 
-            ToolStripMenuItem menuFichier = new ToolStripMenuItem("Fichier"); // instancier un élément du menu
+            ToolStripMenuItem menuFichier = new ToolStripMenuItem("Fichier"); // Instancier un élément du menu
             ToolStripMenuItem itemImporter = new ToolStripMenuItem("Importer un fichier");
 
             menuFichier.DropDownItems.Add(itemImporter); // Ajout du bouton au sous-menu
@@ -67,8 +77,8 @@ namespace PlotThoseLines
 
             itemImporter.Click += (sender, e) => ImportFile();
 
-            this.MainMenuStrip = menuStrip; // déclaration du menu 
-            this.Controls.Add(menuStrip); // ajout visuel
+            this.MainMenuStrip = menuStrip; // Déclaration du menu 
+            this.Controls.Add(menuStrip); // Ajout visuel
         }
         // Méthode pour l'import des données depuis un fichier
         public void ImportFile()
@@ -80,10 +90,10 @@ namespace PlotThoseLines
             };
             if (choiceDialog.ShowDialog() == DialogResult.OK)
             {
-                // pour l'axe y (date)
+                // Pour l'axe y (date)
                 string[] aliasDate = { "date", "timestamp", "datetime", "time" };
 
-                // pour l'axe y (valeur)
+                // Pour l'axe y (valeur)
                 string[] aliasPrix = { "market_cap", "cap", "market", "market_capitalisation", "capitalisation" };
                 try
                 {
@@ -99,20 +109,20 @@ namespace PlotThoseLines
 
                         int colIndex = Array.FindIndex(headers, col => aliasPrix.Contains(col.Trim(), StringComparer.OrdinalIgnoreCase));
                         int dateIndex = Array.FindIndex(headers, col => aliasDate.Contains(col.Trim(), StringComparer.OrdinalIgnoreCase));
-                        // tableau d'en-têtes est parcouru, pour trouver les colonnes nécessaires.
+                        // Tableau d'en-têtes est parcouru, pour trouver les colonnes nécessaires.
 
                         if (colIndex == -1)
                             throw new InvalidDataException("Colonne de prix est introuvable dans ce fichier.");
 
                         foreach (string line in lines.Skip(1))
                         {
-                            if (string.IsNullOrWhiteSpace(line)) continue; // ignore si la ligne est vide
+                            if (string.IsNullOrWhiteSpace(line)) continue; // Ignore si la ligne est vide
 
-                            string[] colonnes = line.Split(","); // découpe la ligne
+                            string[] colonnes = line.Split(","); // Découpe la ligne
 
-                            bool dateOk = DateTime.TryParse(colonnes[dateIndex].Trim(), out DateTime dt); // convertit le texte en une DateTime
+                            bool dateOk = DateTime.TryParse(colonnes[dateIndex].Trim(), out DateTime dt); // Convertit le texte en une DateTime
                             bool valOk = double.TryParse(colonnes[colIndex].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out double val);
-                            // convertit le texte en un nombre décimal (cultureInfo sert à utiliser les règles de formatage fixe)
+                            // Convertit le texte en un nombre décimal (cultureInfo sert à utiliser les règles de formatage fixe)
 
                             if (dateOk && valOk)
                             {
@@ -120,23 +130,33 @@ namespace PlotThoseLines
                             }
                         }
 
-                        // création de datasérie
-                        DataSerie<double> Serie = DataSerie<double>.From(serieName, points);
-                        double[] x = Serie.Dates.Select(x => x.ToOADate()).ToArray();
-                        double[] y = Serie.Values.ToArray();
+                        // Création de la DataSerie
+                        DataSerie<double> serie = DataSerie<double>.From(serieName, points);
 
+                        // Vérifier si une série avec ce nom existe déjà
                         if (plotSeries.ContainsKey(serieName))
                         {
-                            MessageBox.Show($"Erreur : le fichier avec le même nom existe déjà", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            MessageBox.Show("Erreur : un fichier avec le même nom existe déjà.","Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                             return;
                         }
 
-                        var scottSerie = plot.Plot.Add.Scatter(x, y); 
-                        scottSerie.LegendText = serieName; // affichage la légende
+                        // Créer l'objet qui sera sauvegardé dans le JSON
+                        SavedSerie savedSerie = new SavedSerie
+                        {
+                            Name = serieName,
+                            IsVisible = true,
 
-                        plotSeries.Add(serieName, scottSerie); // affichage de la série 
-                        int index = seriesList.Items.Add(serieName);  
-                        seriesList.SetItemChecked(index, true); // ajout du graphique dans la liste 
+                            Points = serie.Points
+                                .Select(point => new SavedPoint
+                                {
+                                    Timestamp = point.Timestamp,
+                                    Value = point.Value
+                                })
+                                .ToList()
+                        };
+                        savedSeries.Add(savedSerie);
+                        AddSerieToPlot(savedSerie);
+                        SaveData();
                     }
                     plot.Plot.Axes.DateTimeTicksBottom();
                     plot.Plot.Axes.AutoScale();
@@ -148,24 +168,110 @@ namespace PlotThoseLines
                 }
             }
         }
-        // Vérifier si le nom du graphique est unique
         // Masquer / afficher le graphique
-        private void SeriesList_ItemCheck(object? sender, ItemCheckEventArgs e)
+        private void SeriesList_ItemCheck(object? sender,ItemCheckEventArgs e)
         {
-            // récupérer le nom de la série cliquée
+            // Récupérer le nom de la série cliquée
             string nom = seriesList.Items[e.Index].ToString()!;
 
-            // vérifier que la série existe
+            // Savoir si la case va être cochée ou décochée
+            bool estVisible = e.NewValue == CheckState.Checked;
+
+            // Afficher ou masquer la courbe
             if (plotSeries.ContainsKey(nom))
             {
-                // récupérer la serie par son nom 
                 var serie = plotSeries[nom];
+                serie.IsVisible = estVisible;
+            }
 
-                bool estCochee = e.NewValue == CheckState.Checked; // vérifier si la case va être cochée
-                serie.IsVisible = estCochee; // afficher ou masquer la courbe
+            // Retrouver la série dans les données sauvegardées
+            SavedSerie? serieSauvegardee = savedSeries.FirstOrDefault(serie => serie.Name == nom);
+            // Sauvegarder son nouvel état
+            if (serieSauvegardee != null)
+            {
+                serieSauvegardee.IsVisible = estVisible;
+            }
 
+            plot.Plot.Axes.AutoScale();
+            plot.Refresh();
+            if (!isLoadingData)
+                SaveData();
+        }
+        // Sauvegarde des données en json
+        private void SaveData()
+        {
+            JsonSerializerOptions options = new JsonSerializerOptions
+            {
+                WriteIndented = true
+            };
+
+            string json = JsonSerializer.Serialize(savedSeries, options);
+
+            Directory.CreateDirectory(Application.LocalUserAppDataPath);
+
+            File.WriteAllText(savePath, json);
+        }
+        // Charger les données du fichier JSON
+        private void LoadData()
+        {
+            // Ne rien faire si le fichier JSON n'existe pas
+            if (!File.Exists(savePath))
+                return;
+            try
+            {
+                // Évite de sauvegarder pendant le chargement
+                isLoadingData = true;
+
+                // Lire le contenu du fichier
+                string json = File.ReadAllText(savePath);
+
+                // Transformer le JSON en liste de séries
+                List<SavedSerie>? seriesChargees = JsonSerializer.Deserialize<List<SavedSerie>>(json);
+
+                if (seriesChargees == null)
+                    return;
+
+                // Ajouter chaque série dans l'application
+                foreach (SavedSerie serie in seriesChargees)
+                {
+                    savedSeries.Add(serie);
+                    AddSerieToPlot(serie);
+                }
+
+                plot.Plot.Axes.DateTimeTicksBottom();
+                plot.Plot.Axes.AutoScale();
                 plot.Refresh();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement des données :\n{ex.Message}","Erreur",MessageBoxButtons.OK,MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Le chargement est terminé
+                isLoadingData = false;
+            }
+        }
+        // Rajout des séries sur le graph
+        private void AddSerieToPlot(SavedSerie savedSerie)
+        {
+            double[] dates = savedSerie.Points
+                .Select(point => point.Timestamp.ToOADate())
+                .ToArray();
+            double[] values = savedSerie.Points
+                .Select(point => point.Value)
+                .ToArray();
+
+            var scottSerie = plot.Plot.Add.Scatter(dates, values);
+
+            scottSerie.LegendText = savedSerie.Name;
+            scottSerie.IsVisible = savedSerie.IsVisible;
+
+            plotSeries.Add(savedSerie.Name, scottSerie);
+
+            int index = seriesList.Items.Add(savedSerie.Name);
+
+            seriesList.SetItemChecked(index, savedSerie.IsVisible);
         }
     }
 }
