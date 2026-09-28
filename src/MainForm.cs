@@ -51,6 +51,7 @@ namespace PlotThoseLines
 
             LoadMenu();
         }
+        // Charger le menu ruban
         public void LoadMenu()
         {
             MenuStrip menuStrip = new MenuStrip
@@ -69,6 +70,7 @@ namespace PlotThoseLines
             this.MainMenuStrip = menuStrip; // déclaration du menu 
             this.Controls.Add(menuStrip); // ajout visuel
         }
+        // Méthode pour l'import des données depuis un fichier
         public void ImportFile()
         {
             using OpenFileDialog choiceDialog = new OpenFileDialog()
@@ -123,40 +125,30 @@ namespace PlotThoseLines
                         double[] x = Serie.Dates.Select(x => x.ToOADate()).ToArray();
                         double[] y = Serie.Values.ToArray();
 
-                        string uniqueName = GetUniqueSerieName(serieName);
+                        if (plotSeries.ContainsKey(serieName))
+                        {
+                            MessageBox.Show($"Erreur : le fichier avec le même nom existe déjà", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
 
                         var scottSerie = plot.Plot.Add.Scatter(x, y); 
-                        scottSerie.LegendText = uniqueName; // affichage la légende
+                        scottSerie.LegendText = serieName; // affichage la légende
 
-                        plotSeries.Add(uniqueName, scottSerie); // affichage de la série 
-                        int index = seriesList.Items.Add(uniqueName);  
+                        plotSeries.Add(serieName, scottSerie); // affichage de la série 
+                        int index = seriesList.Items.Add(serieName);  
                         seriesList.SetItemChecked(index, true); // ajout du graphique dans la liste 
                     }
                     plot.Plot.Axes.DateTimeTicksBottom();
                     plot.Plot.Axes.AutoScale();
                     plot.Refresh();
                 }
-
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Erreur lors de la lecture du fichier :\n{ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
         }
         // Vérifier si le nom du graphique est unique
-        private string GetUniqueSerieName(string originalName)
-        {
-            string name = originalName;
-            int number = 2;
-
-            while (plotSeries.ContainsKey(name))
-            {
-                name = $"{originalName} ({number})";
-                number++;
-            }
-            return name;
-        }
         // Masquer / afficher le graphique
         private void SeriesList_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
