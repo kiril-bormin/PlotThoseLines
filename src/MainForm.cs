@@ -13,7 +13,6 @@ namespace PlotThoseLines
         public MainForm()
         {
             InitializeComponent();
-            LoadMenu();
 
             // instancier la liste des graphiques
             seriesList = new CheckedListBox
@@ -29,21 +28,35 @@ namespace PlotThoseLines
                 Dock = DockStyle.Fill
             };
 
-            SplitContainer splitContainer = new SplitContainer
+            SplitContainer splitContainer = new SplitContainer // paramètres de la fenêtre d'affichage
             {
                 Dock = DockStyle.Fill,
                 Orientation = Orientation.Vertical,
-                SplitterDistance = 300,
+                Panel1MinSize = 100, // largeur minimale du premier composant
+                SplitterDistance = 150,
                 FixedPanel = FixedPanel.Panel1
             };
-            splitContainer.Panel1.Controls.Add(seriesList);
+
+            Panel listPanel = new Panel // ajout du padding sur la liste
+            {
+                Dock = DockStyle.Fill,
+                Padding = new Padding(5, 0, 0, 0)
+            };
+
+            listPanel.Controls.Add(seriesList);
+            splitContainer.Panel1.Controls.Add(listPanel);
             splitContainer.Panel2.Controls.Add(plot);
 
             Controls.Add(splitContainer);
+
+            LoadMenu();
         }
         public void LoadMenu()
         {
-            MenuStrip menuStrip = new MenuStrip(); // instancier le menu
+            MenuStrip menuStrip = new MenuStrip
+            {
+                Dock = DockStyle.Top
+            }; // instancier le menu
 
             ToolStripMenuItem menuFichier = new ToolStripMenuItem("Fichier"); // instancier un élément du menu
             ToolStripMenuItem itemImporter = new ToolStripMenuItem("Importer un fichier");
@@ -110,19 +123,15 @@ namespace PlotThoseLines
                         double[] x = Serie.Dates.Select(x => x.ToOADate()).ToArray();
                         double[] y = Serie.Values.ToArray();
 
-                        var scottSerie = plot.Plot.Add.Scatter(x, y); 
-                        scottSerie.LegendText = serieName; 
-
                         string uniqueName = GetUniqueSerieName(serieName);
 
+                        var scottSerie = plot.Plot.Add.Scatter(x, y); 
                         scottSerie.LegendText = uniqueName; // affichage la légende
-                        
 
                         plotSeries.Add(uniqueName, scottSerie); // affichage de la série 
-                        seriesList.Items.Add(uniqueName, true); // ajout du graphique dans la liste 
-
+                        int index = seriesList.Items.Add(uniqueName);  
+                        seriesList.SetItemChecked(index, true); // ajout du graphique dans la liste 
                     }
-
                     plot.Plot.Axes.DateTimeTicksBottom();
                     plot.Plot.Axes.AutoScale();
                     plot.Refresh();
@@ -135,6 +144,7 @@ namespace PlotThoseLines
             }
 
         }
+        // Vérifier si le nom du graphique est unique
         private string GetUniqueSerieName(string originalName)
         {
             string name = originalName;
@@ -145,18 +155,23 @@ namespace PlotThoseLines
                 name = $"{originalName} ({number})";
                 number++;
             }
-
             return name;
         }
+        // Masquer / afficher le graphique
         private void SeriesList_ItemCheck(object? sender, ItemCheckEventArgs e)
         {
-            string serieName = seriesList.Items[e.Index].ToString()!;
+            // récupérer le nom de la série cliquée
+            string nom = seriesList.Items[e.Index].ToString()!;
 
-            if (plotSeries.TryGetValue(serieName, out var serie))
+            // vérifier que la série existe
+            if (plotSeries.ContainsKey(nom))
             {
-                serie.IsVisible = e.NewValue == CheckState.Checked;
+                // récupérer la serie par son nom 
+                var serie = plotSeries[nom];
 
-                plot.Plot.Axes.AutoScale();
+                bool estCochee = e.NewValue == CheckState.Checked; // vérifier si la case va être cochée
+                serie.IsVisible = estCochee; // afficher ou masquer la courbe
+
                 plot.Refresh();
             }
         }
