@@ -42,9 +42,10 @@ namespace PlotThoseLines
                 Dock = DockStyle.Fill,
                 Orientation = Orientation.Vertical,
                 Panel1MinSize = 100, // largeur minimale du premier composant
-                SplitterDistance = 150,
                 FixedPanel = FixedPanel.Panel1
             };
+
+            // Menus
             GroupBox groupBox = new GroupBox
             {
                 Text = "Graphiques",
@@ -55,11 +56,10 @@ namespace PlotThoseLines
             Panel listPanel = new Panel
             {
                 Dock = DockStyle.Fill,
-
-                // gauche, haut, droite, bas
                 Padding = new Padding(5, 5, 5, 10)
             };
 
+            // Supprimer bouton
             Button deleteButton = new Button
             {
                 Text = "Supprimer",
@@ -67,15 +67,39 @@ namespace PlotThoseLines
                 Height = 25
             };
 
-
             deleteButton.Click += (sender, e) =>
                 DeleteSelectedSerie();
 
+            // Reset zoom
+            Button resetZoomButton = new Button
+            {
+                Text = "Réinit. le zoom",
+                Dock = DockStyle.Bottom,
+                Height = 25
+            };
+            resetZoomButton.Click += (sender, e) =>
+            {
+                plot.Plot.Axes.AutoScale();
+                plot.Refresh();
+            };
+
+            // Export en png
+            Button exportPngButton = new Button
+            {
+                Text = "Exporter en png",
+                Dock = DockStyle.Bottom,
+                Height = 25
+            };
+            exportPngButton.Click += (sender, e) => ExportToPng();
+
+
             seriesList.Dock = DockStyle.Fill;
 
-            // Contenu du bloc
+            // Ajout des composants
             groupBox.Controls.Add(seriesList);
             groupBox.Controls.Add(deleteButton);
+            groupBox.Controls.Add(resetZoomButton);
+            groupBox.Controls.Add(exportPngButton);
             listPanel.Controls.Add(groupBox);
 
             splitContainer.Panel1.Controls.Add(listPanel);
@@ -85,6 +109,12 @@ namespace PlotThoseLines
 
             LoadMenu();
             LoadData();
+
+            // Définir la taille de fenêtre par défaut
+            Shown += (sender, e) =>
+            {
+                splitContainer.SplitterDistance = 130;
+            };
         }
         // Charger le menu ruban
         public void LoadMenu()
@@ -395,6 +425,30 @@ namespace PlotThoseLines
 
             plot.Plot.Axes.AutoScale();
             plot.Refresh();
+        }
+        // Exporter image en pdf
+        private void ExportToPng()
+        {
+            using SaveFileDialog dialog = new SaveFileDialog
+            {
+                Title = "Exporter le graphique",
+                Filter = "Image PNG (*.png)|*.png",
+                FileName = "graphique.png"
+            };
+
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                plot.Plot.SavePng(
+                    dialog.FileName,
+                    plot.Width,
+                    plot.Height);
+
+                MessageBox.Show(
+                    "Le graphique a été exporté.",
+                    "Export terminé",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+            }
         }
     }
 }
