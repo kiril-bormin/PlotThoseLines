@@ -15,8 +15,8 @@ namespace PlotThoseLines
         // Liste des séries sauvegardées
         private readonly List<SavedSerie> savedSeries = new();
 
-        // Chemin de fichier
-        private readonly string savePath = Path.Combine(Application.LocalUserAppDataPath, "data.json");
+        // Chemin de fichier (AppData/Local/PlotThoseLines/data.json)
+        private readonly string savePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"PlotThoseLines", "data.json"); 
 
         private bool isLoadingData = false;
         public MainForm()
@@ -99,6 +99,8 @@ namespace PlotThoseLines
                 {
                     string extension = Path.GetExtension(choiceDialog.FileName).ToLower();
                     string serieName = Path.GetFileNameWithoutExtension(choiceDialog.FileName);
+                    string companyAcronym = serieName.Split("_")[0]; // Garde seulement l'acronyme commercial de l'entreprise
+
                     List<DataPoint<double>> points = new();
 
                     if (extension == ".csv")
@@ -133,31 +135,70 @@ namespace PlotThoseLines
                         // Création de la DataSerie
                         DataSerie<double> serie = DataSerie<double>.From(serieName, points);
 
-                        // Vérifier si une série avec ce nom existe déjà
-                        if (plotSeries.ContainsKey(serieName))
+
+                        // Retrouve la série existante
+                        SavedSerie? serieExistante = savedSeries.FirstOrDefault(s => s.Name == companyAcronym);
+
+
+                        // Créer l'objets qui sera sauvegardé dans le JSON
+                        List<SavedPoint> nouveauxPoints = points
+                            .Select(p => new SavedPoint
+                            {
+                                Timestamp = p.Timestamp,
+                                Value = p.Value
+                            })
+                            .ToList();
+
+                        if (nouveauxPoints.Count == 0)
                         {
-                            MessageBox.Show("Erreur : un fichier avec le même nom existe déjà.","Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            return;
+                            throw new InvalidDataException(
+                            "Le fichier ne contient aucun point valide.");
                         }
 
-                        // Créer l'objet qui sera sauvegardé dans le JSON
-                        SavedSerie savedSerie = new SavedSerie
+                        if (serieExistante is null)
                         {
-                            Name = serieName,
-                            IsVisible = true,
+                            SavedSerie nouvelleSerie = new SavedSerie
+                            {
+                                Name = companyAcronym,
+                                IsVisible = true,
+                                Points = nouveauxPoints
+                            };
 
-                            Points = serie.Points
-                                .Select(point => new SavedPoint
-                                {
-                                    Timestamp = point.Timestamp,
-                                    Value = point.Value
-                                })
-                                .ToList()
-                        };
-                        savedSeries.Add(savedSerie);
-                        AddSerieToPlot(savedSerie);
-                        SaveData();
+                            savedSeries.Add(nouvelleSerie);
+                            AddSerieToPlot(nouvelleSerie);
+                        }
+                        else
+                        {
+                            DateTime dateDebut = nouveauxPoints.Min(p => p.Timestamp);
+                            DateTime dateFin = nouveauxPoints.Max(p => p.Timestamp);
+
+                            List<SavedPoint> anciensPointsConserves = serieExistante.Points
+                                .Where(p =>
+                                    p.Timestamp.Date < dateDebut ||
+                                    p.Timestamp.Date > dateFin)
+                                .ToList();
+
+                            // Fusionner et trier les données
+                            serieExistante.Points = anciensPointsConserves
+                                .Concat(nouveauxPoints)
+                                .OrderBy(p => p.Timestamp)
+                                .ToList();
+
+                            // Retirer l'ancienne courbe du graphique
+                            if (plotSeries.TryGetValue(
+                            companyAcronym,
+                            out var ancienneCourbe))
+                            {
+                                plot.Plot.Remove(ancienneCourbe);
+                                plotSeries.Remove(companyAcronym);
+                            }
+
+                            // Recréer la courbe avec les données fusionnées
+                            AddSerieToPlot(serieExistante);
+                        }
                     }
+                    SaveData();
+
                     plot.Plot.Axes.DateTimeTicksBottom();
                     plot.Plot.Axes.AutoScale();
                     plot.Refresh();
@@ -207,7 +248,9 @@ namespace PlotThoseLines
 
             string json = JsonSerializer.Serialize(savedSeries, options);
 
-            Directory.CreateDirectory(Application.LocalUserAppDataPath);
+            string folder = Path.GetDirectoryName(savePath)!;
+
+            Directory.CreateDirectory(folder);
 
             File.WriteAllText(savePath, json);
         }
@@ -269,9 +312,14 @@ namespace PlotThoseLines
 
             plotSeries.Add(savedSerie.Name, scottSerie);
 
-            int index = seriesList.Items.Add(savedSerie.Name);
+            if (!seriesList.Items.Contains(savedSerie.Name))
+            {
+                int index = seriesList.Items.Add(savedSerie.Name);
 
-            seriesList.SetItemChecked(index, savedSerie.IsVisible);
+                seriesList.SetItemChecked(
+                index,
+                savedSerie.IsVisible);
+            }
         }
     }
 }
