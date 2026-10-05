@@ -463,19 +463,22 @@ namespace PlotThoseLines
         private static string FormaterCapitalisation(double valeur)
         {
             if (valeur >= 1_000_000_000_000)
-            {
                 return $"{valeur / 1_000_000_000_000:0.##} T";
-            }
 
             if (valeur >= 1_000_000_000)
-            {
                 return $"{valeur / 1_000_000_000:0.##} Md";
-            }
 
             if (valeur >= 1_000_000)
-            {
                 return $"{valeur / 1_000_000:0.##} M";
-            }
+
+            if (valeur <= -1_000_000_000_000)
+                return $"{valeur / 1_000_000_000_000:0.##} T";
+
+            if (valeur <= -1_000_000_000)
+                return $"{valeur / 1_000_000_000:0.##} Md";
+
+            if (valeur <= -1_000_000)
+                return $"{valeur / 1_000_000:0.##} M";
 
             return valeur.ToString("0");
         }
