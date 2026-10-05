@@ -45,14 +45,39 @@ namespace PlotThoseLines
                 SplitterDistance = 150,
                 FixedPanel = FixedPanel.Panel1
             };
-
-            Panel listPanel = new Panel // ajout du padding sur la liste
+            GroupBox groupBox = new GroupBox
             {
+                Text = "Graphiques",
                 Dock = DockStyle.Fill,
-                Padding = new Padding(5, 0, 0, 0)
+                Padding = new Padding(8)
             };
 
-            listPanel.Controls.Add(seriesList);
+            Panel listPanel = new Panel
+            {
+                Dock = DockStyle.Fill,
+
+                // gauche, haut, droite, bas
+                Padding = new Padding(5, 5, 5, 10)
+            };
+
+            Button deleteButton = new Button
+            {
+                Text = "Supprimer",
+                Dock = DockStyle.Bottom,
+                Height = 25
+            };
+
+
+            deleteButton.Click += (sender, e) =>
+                DeleteSelectedSerie();
+
+            seriesList.Dock = DockStyle.Fill;
+
+            // Contenu du bloc
+            groupBox.Controls.Add(seriesList);
+            groupBox.Controls.Add(deleteButton);
+            listPanel.Controls.Add(groupBox);
+
             splitContainer.Panel1.Controls.Add(listPanel);
             splitContainer.Panel2.Controls.Add(plot);
 
@@ -320,6 +345,56 @@ namespace PlotThoseLines
                 index,
                 savedSerie.IsVisible);
             }
+        }
+        // Supprimer une série de graphique et de fichier json
+        private void DeleteSelectedSerie()
+        {
+            // Vérifier qu'une série est sélectionnée
+            if (seriesList.SelectedItem == null)
+            {
+                MessageBox.Show(
+                    "Sélectionnez une série à supprimer.",
+                    "Aucune sélection",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Information);
+
+                return;
+            }
+
+            // Nom de la série à supprimer
+            string nom = seriesList.SelectedItem.ToString()!;
+
+            // Demander confirmation
+            DialogResult result = MessageBox.Show(
+                $"Voulez-vous vraiment supprimer {nom} ?",
+                "Confirmation",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning);
+
+            if (result != DialogResult.Yes)
+                return;
+
+            // Supprimer la courbe du graphique
+            if (plotSeries.TryGetValue(nom, out var courbe))
+            {
+                plot.Plot.Remove(courbe);
+                plotSeries.Remove(nom);
+            }
+
+            // Supprimer les données sauvegardées   
+            SavedSerie? serieSauvegardee = savedSeries.FirstOrDefault(serie => serie.Name == nom);
+
+            if (serieSauvegardee != null)
+                savedSeries.Remove(serieSauvegardee);
+
+            // Supprimer l'élément de la liste
+            seriesList.Items.Remove(nom);
+
+            // Mettre à jour le json
+            SaveData();
+
+            plot.Plot.Axes.AutoScale();
+            plot.Refresh();
         }
     }
 }
