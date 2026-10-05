@@ -45,6 +45,7 @@ namespace PlotThoseLines
 
             plot.Plot.Axes.Left.TickGenerator = tickGenerator;
 
+
             // Le conteneur commun
             SplitContainer splitContainer = new SplitContainer // paramètres de la fenêtre d'affichage
             {
