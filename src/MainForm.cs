@@ -37,12 +37,21 @@ namespace PlotThoseLines
                 Dock = DockStyle.Fill
             };
 
+            // Transformer des grandes nombres en nombre + texte (ex.: 1.2T)
+            ScottPlot.TickGenerators.NumericAutomatic tickGenerator = new()
+            {
+                LabelFormatter = FormaterCapitalisation
+            };
+
+            plot.Plot.Axes.Left.TickGenerator = tickGenerator;
+
+            // Le conteneur commun
             SplitContainer splitContainer = new SplitContainer // paramètres de la fenêtre d'affichage
             {
                 Dock = DockStyle.Fill,
                 Orientation = Orientation.Vertical,
                 Panel1MinSize = 100, // largeur minimale du premier composant
-                FixedPanel = FixedPanel.Panel1
+                FixedPanel = FixedPanel.Panel1,
             };
 
             // Menus
@@ -433,7 +442,7 @@ namespace PlotThoseLines
             {
                 Title = "Exporter le graphique",
                 Filter = "Image PNG (*.png)|*.png",
-                FileName = "graphique.png"
+                FileName = "chart.png"
             };
 
             if (dialog.ShowDialog() == DialogResult.OK)
@@ -444,11 +453,31 @@ namespace PlotThoseLines
                     plot.Height);
 
                 MessageBox.Show(
-                    "Le graphique a été exporté.",
+                    "Le graphique a été exporté avec succès.",
                     "Export terminé",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
+        }
+        // Transformer des grandes nombres en nombre + texte (ex.: 1.2T)
+        private static string FormaterCapitalisation(double valeur)
+        {
+            if (valeur >= 1_000_000_000_000)
+            {
+                return $"{valeur / 1_000_000_000_000:0.##} T";
+            }
+
+            if (valeur >= 1_000_000_000)
+            {
+                return $"{valeur / 1_000_000_000:0.##} Md";
+            }
+
+            if (valeur >= 1_000_000)
+            {
+                return $"{valeur / 1_000_000:0.##} M";
+            }
+
+            return valeur.ToString("0");
         }
     }
 }
