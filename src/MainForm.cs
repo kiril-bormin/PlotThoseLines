@@ -9,10 +9,10 @@ namespace PlotThoseLines
         private FormsPlot plot;
         private CheckedListBox seriesList;
 
-        // Stocke les séries ajoutées dans ScottPlot
+        // Stocke les sÐ¹ries ajoutÐ¹es dans ScottPlot
         private readonly Dictionary<string, ScottPlot.Plottables.Scatter> plotSeries = new();
 
-        // Liste des séries sauvegardées
+        // Liste des sÐ¹ries sauvegardÐ¹es
         private readonly List<SavedSerie> savedSeries = new();
 
         // Chemin de fichier (AppData/Local/PlotThoseLines/data.json)
@@ -22,6 +22,13 @@ namespace PlotThoseLines
         public MainForm()
         {
             InitializeComponent();
+
+            // Calculer le facteur d'Ã©chelle
+            float scale = this.DeviceDpi / 96f;
+            int Scale(int value) => (int)(value * scale);
+
+            // Taille par dÃ©faut de la fenÃªtre
+            this.ClientSize = new Size(Scale(800), Scale(500));
 
             // Instancier la liste des graphiques
             seriesList = new CheckedListBox
@@ -36,7 +43,8 @@ namespace PlotThoseLines
             {
                 Dock = DockStyle.Fill
             };
-
+            // Appliquer l'Ã©chelle
+            plot.Plot.ScaleFactor = scale;
             // Transformer des grandes nombres en nombre + texte (ex.: 1.2T)
             ScottPlot.TickGenerators.NumericAutomatic tickGenerator = new()
             {
@@ -47,11 +55,11 @@ namespace PlotThoseLines
 
 
             // Le conteneur commun
-            SplitContainer splitContainer = new SplitContainer // paramètres de la fenêtre d'affichage
+            SplitContainer splitContainer = new SplitContainer // paramÐ¸tres de la fenÐºtre d'affichage
             {
                 Dock = DockStyle.Fill,
                 Orientation = Orientation.Vertical,
-                Panel1MinSize = 100, // largeur minimale du premier composant
+                Panel1MinSize = Scale(100), // largeur minimale du premier composant
                 FixedPanel = FixedPanel.Panel1,
             };
 
@@ -60,13 +68,13 @@ namespace PlotThoseLines
             {
                 Text = "Graphiques",
                 Dock = DockStyle.Fill,
-                Padding = new Padding(8)
+                Padding = new Padding(Scale(8))
             };
 
             Panel listPanel = new Panel
             {
                 Dock = DockStyle.Fill,
-                Padding = new Padding(5, 5, 5, 10)
+                Padding = new Padding(Scale(5), Scale(5), Scale(5), Scale(10))
             };
 
             // Supprimer bouton
@@ -74,7 +82,7 @@ namespace PlotThoseLines
             {
                 Text = "Supprimer",
                 Dock = DockStyle.Bottom,
-                Height = 25
+                Height = Scale(28)
             };
 
             deleteButton.Click += (sender, e) =>
@@ -83,9 +91,9 @@ namespace PlotThoseLines
             // Reset zoom
             Button resetZoomButton = new Button
             {
-                Text = "Réinit. le zoom",
+                Text = "RÐ¹init. le zoom",
                 Dock = DockStyle.Bottom,
-                Height = 25
+                Height = Scale(28)
             };
             resetZoomButton.Click += (sender, e) =>
             {
@@ -98,7 +106,7 @@ namespace PlotThoseLines
             {
                 Text = "Exporter en png",
                 Dock = DockStyle.Bottom,
-                Height = 25
+                Height = Scale(28)
             };
             exportPngButton.Click += (sender, e) => ExportToPng();
 
@@ -120,10 +128,10 @@ namespace PlotThoseLines
             LoadMenu();
             LoadData();
 
-            // Définir la taille de fenêtre par défaut
+            // DÐ¹finir la taille de fenÐºtre par dÐ¹faut
             Shown += (sender, e) =>
             {
-                splitContainer.SplitterDistance = 130;
+                splitContainer.SplitterDistance = Scale(150);
             };
         }
         // Charger le menu ruban
@@ -134,7 +142,7 @@ namespace PlotThoseLines
                 Dock = DockStyle.Top
             }; // Instancier le menu
 
-            ToolStripMenuItem menuFichier = new ToolStripMenuItem("Fichier"); // Instancier un élément du menu
+            ToolStripMenuItem menuFichier = new ToolStripMenuItem("Fichier"); // Instancier un Ð¹lÐ¹ment du menu
             ToolStripMenuItem itemImporter = new ToolStripMenuItem("Importer un fichier");
 
             menuFichier.DropDownItems.Add(itemImporter); // Ajout du bouton au sous-menu
@@ -142,16 +150,16 @@ namespace PlotThoseLines
 
             itemImporter.Click += (sender, e) => ImportFile();
 
-            this.MainMenuStrip = menuStrip; // Déclaration du menu 
+            this.MainMenuStrip = menuStrip; // DÐ¹claration du menu 
             this.Controls.Add(menuStrip); // Ajout visuel
         }
-        // Méthode pour l'import des données depuis un fichier
+        // MÐ¹thode pour l'import des donnÐ¹es depuis un fichier
         public void ImportFile()
         {
             using OpenFileDialog choiceDialog = new OpenFileDialog()
             {
-                Title = "Séléctionner un fichier de format .csv",
-                Filter = "Fichiers supportés (*.csv)|*.csv"
+                Title = "SÐ¹lÐ¹ctionner un fichier de format .csv",
+                Filter = "Fichiers supportÐ¹s (*.csv)|*.csv"
             };
             if (choiceDialog.ShowDialog() == DialogResult.OK)
             {
@@ -176,7 +184,7 @@ namespace PlotThoseLines
 
                         int colIndex = Array.FindIndex(headers, col => aliasPrix.Contains(col.Trim(), StringComparer.OrdinalIgnoreCase));
                         int dateIndex = Array.FindIndex(headers, col => aliasDate.Contains(col.Trim(), StringComparer.OrdinalIgnoreCase));
-                        // Tableau d'en-têtes est parcouru, pour trouver les colonnes nécessaires.
+                        // Tableau d'en-tÐºtes est parcouru, pour trouver les colonnes nÐ¹cessaires.
 
                         if (colIndex == -1)
                             throw new InvalidDataException("Colonne de prix est introuvable dans ce fichier.");
@@ -185,11 +193,11 @@ namespace PlotThoseLines
                         {
                             if (string.IsNullOrWhiteSpace(line)) continue; // Ignore si la ligne est vide
 
-                            string[] colonnes = line.Split(","); // Découpe la ligne
+                            string[] colonnes = line.Split(","); // DÐ¹coupe la ligne
 
                             bool dateOk = DateTime.TryParse(colonnes[dateIndex].Trim(), out DateTime dt); // Convertit le texte en une DateTime
                             bool valOk = double.TryParse(colonnes[colIndex].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out double val);
-                            // Convertit le texte en un nombre décimal (cultureInfo sert à utiliser les règles de formatage fixe)
+                            // Convertit le texte en un nombre dÐ¹cimal (cultureInfo sert Ð° utiliser les rÐ¸gles de formatage fixe)
 
                             if (dateOk && valOk)
                             {
@@ -197,15 +205,15 @@ namespace PlotThoseLines
                             }
                         }
 
-                        // Création de la DataSerie
+                        // CrÐ¹ation de la DataSerie
                         DataSerie<double> serie = DataSerie<double>.From(serieName, points);
 
 
-                        // Retrouve la série existante
+                        // Retrouve la sÐ¹rie existante
                         SavedSerie? serieExistante = savedSeries.FirstOrDefault(s => s.Name == companyAcronym);
 
 
-                        // Créer l'objets qui sera sauvegardé dans le JSON
+                        // CrÐ¹er l'objets qui sera sauvegardÐ¹ dans le JSON
                         List<SavedPoint> nouveauxPoints = points
                             .Select(p => new SavedPoint
                             {
@@ -243,7 +251,7 @@ namespace PlotThoseLines
                                     p.Timestamp.Date > dateFin)
                                 .ToList();
 
-                            // Fusionner et trier les données
+                            // Fusionner et trier les donnÐ¹es
                             serieExistante.Points = anciensPointsConserves
                                 .Concat(nouveauxPoints)
                                 .OrderBy(p => p.Timestamp)
@@ -258,7 +266,7 @@ namespace PlotThoseLines
                                 plotSeries.Remove(companyAcronym);
                             }
 
-                            // Recréer la courbe avec les données fusionnées
+                            // RecrÐ¹er la courbe avec les donnÐ¹es fusionnÐ¹es
                             AddSerieToPlot(serieExistante);
                         }
                     }
@@ -277,10 +285,10 @@ namespace PlotThoseLines
         // Masquer / afficher le graphique
         private void SeriesList_ItemCheck(object? sender,ItemCheckEventArgs e)
         {
-            // Récupérer le nom de la série cliquée
+            // RÐ¹cupÐ¹rer le nom de la sÐ¹rie cliquÐ¹e
             string nom = seriesList.Items[e.Index].ToString()!;
 
-            // Savoir si la case va être cochée ou décochée
+            // Savoir si la case va Ðºtre cochÐ¹e ou dÐ¹cochÐ¹e
             bool estVisible = e.NewValue == CheckState.Checked;
 
             // Afficher ou masquer la courbe
@@ -290,9 +298,9 @@ namespace PlotThoseLines
                 serie.IsVisible = estVisible;
             }
 
-            // Retrouver la série dans les données sauvegardées
+            // Retrouver la sÐ¹rie dans les donnÐ¹es sauvegardÐ¹es
             SavedSerie? serieSauvegardee = savedSeries.FirstOrDefault(serie => serie.Name == nom);
-            // Sauvegarder son nouvel état
+            // Sauvegarder son nouvel Ð¹tat
             if (serieSauvegardee != null)
             {
                 serieSauvegardee.IsVisible = estVisible;
@@ -303,7 +311,7 @@ namespace PlotThoseLines
             if (!isLoadingData)
                 SaveData();
         }
-        // Sauvegarde des données en json
+        // Sauvegarde des donnÐ¹es en json
         private void SaveData()
         {
             JsonSerializerOptions options = new JsonSerializerOptions
@@ -319,7 +327,7 @@ namespace PlotThoseLines
 
             File.WriteAllText(savePath, json);
         }
-        // Charger les données du fichier JSON
+        // Charger les donnÐ¹es du fichier JSON
         private void LoadData()
         {
             // Ne rien faire si le fichier JSON n'existe pas
@@ -327,19 +335,19 @@ namespace PlotThoseLines
                 return;
             try
             {
-                // Évite de sauvegarder pendant le chargement
+                // Ð™vite de sauvegarder pendant le chargement
                 isLoadingData = true;
 
                 // Lire le contenu du fichier
                 string json = File.ReadAllText(savePath);
 
-                // Transformer le JSON en liste de séries
+                // Transformer le JSON en liste de sÐ¹ries
                 List<SavedSerie>? seriesChargees = JsonSerializer.Deserialize<List<SavedSerie>>(json);
 
                 if (seriesChargees == null)
                     return;
 
-                // Ajouter chaque série dans l'application
+                // Ajouter chaque sÐ¹rie dans l'application
                 foreach (SavedSerie serie in seriesChargees)
                 {
                     savedSeries.Add(serie);
@@ -352,15 +360,15 @@ namespace PlotThoseLines
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors du chargement des données :\n{ex.Message}","Erreur",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                MessageBox.Show($"Erreur lors du chargement des donnÐ¹es :\n{ex.Message}","Erreur",MessageBoxButtons.OK,MessageBoxIcon.Error);
             }
             finally
             {
-                // Le chargement est terminé
+                // Le chargement est terminÐ¹
                 isLoadingData = false;
             }
         }
-        // Rajout des séries sur le graph
+        // Rajout des sÐ¹ries sur le graph
         private void AddSerieToPlot(SavedSerie savedSerie)
         {
             double[] dates = savedSerie.Points
@@ -386,22 +394,22 @@ namespace PlotThoseLines
                 savedSerie.IsVisible);
             }
         }
-        // Supprimer une série de graphique et de fichier json
+        // Supprimer une sÐ¹rie de graphique et de fichier json
         private void DeleteSelectedSerie()
         {
-            // Vérifier qu'une série est sélectionnée
+            // VÐ¹rifier qu'une sÐ¹rie est sÐ¹lectionnÐ¹e
             if (seriesList.SelectedItem == null)
             {
                 MessageBox.Show(
-                    "Sélectionnez une série à supprimer.",
-                    "Aucune sélection",
+                    "SÐ¹lectionnez une sÐ¹rie Ð° supprimer.",
+                    "Aucune sÐ¹lection",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
 
                 return;
             }
 
-            // Nom de la série à supprimer
+            // Nom de la sÐ¹rie Ð° supprimer
             string nom = seriesList.SelectedItem.ToString()!;
 
             // Demander confirmation
@@ -421,16 +429,16 @@ namespace PlotThoseLines
                 plotSeries.Remove(nom);
             }
 
-            // Supprimer les données sauvegardées   
+            // Supprimer les donnÐ¹es sauvegardÐ¹es   
             SavedSerie? serieSauvegardee = savedSeries.FirstOrDefault(serie => serie.Name == nom);
 
             if (serieSauvegardee != null)
                 savedSeries.Remove(serieSauvegardee);
 
-            // Supprimer l'élément de la liste
+            // Supprimer l'Ð¹lÐ¹ment de la liste
             seriesList.Items.Remove(nom);
 
-            // Mettre à jour le json
+            // Mettre Ð° jour le json
             SaveData();
 
             plot.Plot.Axes.AutoScale();
@@ -454,8 +462,8 @@ namespace PlotThoseLines
                     plot.Height);
 
                 MessageBox.Show(
-                    "Le graphique a été exporté avec succès.",
-                    "Export terminé",
+                    "Le graphique a Ð¹tÐ¹ exportÐ¹ avec succÐ¸s.",
+                    "Export terminÐ¹",
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
