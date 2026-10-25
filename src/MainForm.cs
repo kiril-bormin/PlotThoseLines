@@ -194,20 +194,8 @@ namespace PlotThoseLines
                         }
                         else
                         {
-                            DateTime dateDebut = nouveauxPoints.Min(p => p.Timestamp);
-                            DateTime dateFin = nouveauxPoints.Max(p => p.Timestamp);
-
-                            List<SavedPoint> anciensPointsConserves = serieExistante.Points
-                                .Where(p =>
-                                    p.Timestamp.Date < dateDebut ||
-                                    p.Timestamp.Date > dateFin)
-                                .ToList();
-
-                            // Fusionner et trier les données
-                            serieExistante.Points = anciensPointsConserves
-                                .Concat(nouveauxPoints)
-                                .OrderBy(p => p.Timestamp)
-                                .ToList();
+                            // Fusionner les données via la classe SeriesMerge
+                            serieExistante.Points = SeriesMerge.Merge(serieExistante.Points, nouveauxPoints);
 
                             // Retirer l'ancienne courbe du graphique
                             if (plotSeries.TryGetValue(companyAcronym, out var ancienneCourbe))

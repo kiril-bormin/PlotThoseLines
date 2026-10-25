@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\user\\documents\\github\\plotthoselines\\src\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\user\\documents\\github\\plotthoselines\\src\\services\\seriesmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:services\\seriesmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\user\\documents\\github\\plotthoselines\\src\\services\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -13,6 +13,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\user\\documents\\github\\plotthoselines\\src\\services\\numbertransformator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:services\\numbertransformator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\user\\documents\\github\\plotthoselines\\src\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,8 +26,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SeriesMerge.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\services\\SeriesMerge.cs",
+              "RelativeDocumentMoniker": "services\\SeriesMerge.cs",
+              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\services\\SeriesMerge.cs",
+              "RelativeToolTip": "services\\SeriesMerge.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-25T19:35:57.446Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 2,
@@ -52,13 +69,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "MainForm.cs",
               "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\MainForm.cs",
               "RelativeDocumentMoniker": "MainForm.cs",
               "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\MainForm.cs",
               "RelativeToolTip": "MainForm.cs",
-              "ViewState": "AgIAAG8BAAAAAAAAAAAcwLIBAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAHIBAAAAAAAAAAAcwI8BAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-20T10:03:26.893Z",
               "EditorCaption": ""
