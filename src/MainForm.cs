@@ -189,21 +189,24 @@ namespace PlotThoseLines
                         if (colIndex == -1)
                             throw new InvalidDataException("Colonne de prix est introuvable dans ce fichier.");
 
-                        foreach (string line in lines.Skip(1))
-                        {
-                            if (string.IsNullOrWhiteSpace(line)) continue; // Ignore si la ligne est vide
+                        points = lines
+                        .Skip(1)
+                        .Where(line => !string.IsNullOrWhiteSpace(line)) // ignorer les lignes vides
+                        .Select(line => line.Split(',')) // Découpe la ligne par virgule 
+                        .Where(cols => cols.Length > Math.Max(colIndex, dateIndex)) // s'assurer que les indexes éxistent
+                        .Select(cols => {
+                            // Convertit le texte en une DateTime
+                            bool dateOk = DateTime.TryParse(cols[dateIndex].Trim(), out DateTime dt);
 
-                            string[] colonnes = line.Split(","); // Découpe la ligne
-
-                            bool dateOk = DateTime.TryParse(colonnes[dateIndex].Trim(), out DateTime dt); // Convertit le texte en une DateTime
-                            bool valOk = double.TryParse(colonnes[colIndex].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out double val);
                             // Convertit le texte en un nombre décimal (cultureInfo sert à utiliser les règles de formatage fixe)
+                            bool valOk = double.TryParse(cols[colIndex].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out double val);
 
-                            if (dateOk && valOk)
-                            {
-                                points.Add(new DataPoint<double>(dt, val));
-                            }
-                        }
+                            return dateOk && valOk ? new DataPoint<double>(dt, val) : null;
+
+                        })
+                        .Where(point => point is not null) // Filtre les points valides
+                        .Select(point => point!).ToList(); // Instancie les points
+                        
 
                         // Création de la DataSerie
                         DataSerie<double> serie = DataSerie<double>.From(serieName, points);
@@ -268,7 +271,7 @@ namespace PlotThoseLines
 
                         plot.Plot.Axes.DateTimeTicksBottom();
 
-                        plot.Plot.YLabel(headers[colIndex].Trim());
+                        // Légende
                         if (dateIndex != -1)
                             plot.Plot.XLabel(headers[dateIndex].Trim());
                         
@@ -349,12 +352,11 @@ namespace PlotThoseLines
                 if (seriesChargees == null)
                     return;
 
-                // Ajouter chaque série dans l'application
-                foreach (SavedSerie serie in seriesChargees)
-                {
-                    savedSeries.Add(serie);
-                    AddSerieToPlot(serie);
-                }
+                // Ajouter toutes les séries chargées à la liste
+                savedSeries.AddRange(seriesChargees);
+
+                // Ajouter chaque série au graphique
+                seriesChargees.ForEach(AddSerieToPlot);
 
                 plot.Plot.Axes.DateTimeTicksBottom();
 
