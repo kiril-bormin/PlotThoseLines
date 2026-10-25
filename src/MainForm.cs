@@ -45,6 +45,7 @@ namespace PlotThoseLines
             };
             // Appliquer l'échelle
             plot.Plot.ScaleFactor = scale;
+
             // Transformer des grandes nombres en nombre + texte (ex.: 1.2T)
             ScottPlot.TickGenerators.NumericAutomatic tickGenerator = new()
             {
@@ -52,7 +53,6 @@ namespace PlotThoseLines
             };
 
             plot.Plot.Axes.Left.TickGenerator = tickGenerator;
-
 
             // Le conteneur commun
             SplitContainer splitContainer = new SplitContainer // paramètres de la fenêtre d'affichage
@@ -77,7 +77,7 @@ namespace PlotThoseLines
                 Padding = new Padding(Scale(5), Scale(5), Scale(5), Scale(10))
             };
 
-            // Supprimer bouton
+            // Bouton Supprimer
             Button deleteButton = new Button
             {
                 Text = "Supprimer",
@@ -109,7 +109,6 @@ namespace PlotThoseLines
                 Height = Scale(28)
             };
             exportPngButton.Click += (sender, e) => ExportToPng();
-
 
             seriesList.Dock = DockStyle.Fill;
 
@@ -184,6 +183,7 @@ namespace PlotThoseLines
 
                         int colIndex = Array.FindIndex(headers, col => aliasPrix.Contains(col.Trim(), StringComparer.OrdinalIgnoreCase));
                         int dateIndex = Array.FindIndex(headers, col => aliasDate.Contains(col.Trim(), StringComparer.OrdinalIgnoreCase));
+
                         // Tableau d'en-têtes est parcouru, pour trouver les colonnes nécessaires.
 
                         if (colIndex == -1)
@@ -208,10 +208,8 @@ namespace PlotThoseLines
                         // Création de la DataSerie
                         DataSerie<double> serie = DataSerie<double>.From(serieName, points);
 
-
                         // Retrouve la série existante
                         SavedSerie? serieExistante = savedSeries.FirstOrDefault(s => s.Name == companyAcronym);
-
 
                         // Créer l'objets qui sera sauvegardé dans le JSON
                         List<SavedPoint> nouveauxPoints = points
@@ -258,9 +256,7 @@ namespace PlotThoseLines
                                 .ToList();
 
                             // Retirer l'ancienne courbe du graphique
-                            if (plotSeries.TryGetValue(
-                            companyAcronym,
-                            out var ancienneCourbe))
+                            if (plotSeries.TryGetValue(companyAcronym, out var ancienneCourbe))
                             {
                                 plot.Plot.Remove(ancienneCourbe);
                                 plotSeries.Remove(companyAcronym);
@@ -269,10 +265,16 @@ namespace PlotThoseLines
                             // Recréer la courbe avec les données fusionnées
                             AddSerieToPlot(serieExistante);
                         }
+
+                        plot.Plot.Axes.DateTimeTicksBottom();
+
+                        plot.Plot.YLabel(headers[colIndex].Trim());
+                        if (dateIndex != -1)
+                            plot.Plot.XLabel(headers[dateIndex].Trim());
+                        
                     }
                     SaveData();
 
-                    plot.Plot.Axes.DateTimeTicksBottom();
                     plot.Plot.Axes.AutoScale();
                     plot.Refresh();
                 }
@@ -355,6 +357,14 @@ namespace PlotThoseLines
                 }
 
                 plot.Plot.Axes.DateTimeTicksBottom();
+
+                // Légendes des axes
+               if (savedSeries.Count > 0)
+                {
+                    plot.Plot.YLabel("Capitalisation boursière en US$");
+                    plot.Plot.XLabel("Date");
+                }
+
                 plot.Plot.Axes.AutoScale();
                 plot.Refresh();
             }
