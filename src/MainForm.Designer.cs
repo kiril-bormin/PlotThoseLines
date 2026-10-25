@@ -1,4 +1,6 @@
-﻿namespace PlotThoseLines
+﻿using System.Resources;
+
+namespace PlotThoseLines
 {
     partial class MainForm
     {
@@ -32,6 +34,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Text = "PlotThoseLines";
+            this.Icon = new Icon("assets/icon.ico");
         }
 
         #endregion
