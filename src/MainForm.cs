@@ -50,7 +50,7 @@ namespace PlotThoseLines
             // Transformer des grandes nombres en nombre + texte (ex.: 1.2T)
             ScottPlot.TickGenerators.NumericAutomatic tickGenerator = new()
             {
-                LabelFormatter = FormaterCapitalisation
+                LabelFormatter = NumberFormatter.Format
             };
 
             plot.Plot.Axes.Left.TickGenerator = tickGenerator;
@@ -169,14 +169,10 @@ namespace PlotThoseLines
                     string serieName = Path.GetFileNameWithoutExtension(choiceDialog.FileName);
                     string companyAcronym = serieName.Split("_")[0]; // Garde seulement l'acronyme commercial de l'entreprise
 
-                    List<DataPoint<double>> points = new();
-
                     if (extension == ".csv")
                     {
                         var lines = File.ReadAllLines(choiceDialog.FileName);
 
-                        string[] headers = lines.First().Split(',');
-                        
                         // Appeler la classe Parser pour obtenir et valider les points 
                         List<SavedPoint> nouveauxPoints = Parser.Parse(lines);
 
@@ -435,29 +431,6 @@ namespace PlotThoseLines
                     MessageBoxButtons.OK,
                     MessageBoxIcon.Information);
             }
-        }
-        // Transformer des grandes nombres en nombre + texte (ex.: 1.2T)
-        private static string FormaterCapitalisation(double valeur)
-        {
-            if (valeur >= 1_000_000_000_000)
-                return $"{valeur / 1_000_000_000_000:0.##} T";
-
-            if (valeur >= 1_000_000_000)
-                return $"{valeur / 1_000_000_000:0.##} Md";
-
-            if (valeur >= 1_000_000)
-                return $"{valeur / 1_000_000:0.##} M";
-
-            if (valeur <= -1_000_000_000_000)
-                return $"{valeur / 1_000_000_000_000:0.##} T";
-
-            if (valeur <= -1_000_000_000)
-                return $"{valeur / 1_000_000_000:0.##} Md";
-
-            if (valeur <= -1_000_000)
-                return $"{valeur / 1_000_000:0.##} M";
-
-            return valeur.ToString("0");
         }
     }
 }
