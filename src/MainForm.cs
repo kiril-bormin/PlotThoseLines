@@ -1,3 +1,4 @@
+using PlotThoseLines.Services;
 using ScottPlot.WinForms;
 using System.Globalization;
 using System.Text.Json;
@@ -162,11 +163,6 @@ namespace PlotThoseLines
             };
             if (choiceDialog.ShowDialog() == DialogResult.OK)
             {
-                // Pour l'axe y (date)
-                string[] aliasDate = { "date", "timestamp", "datetime", "time" };
-
-                // Pour l'axe y (valeur)
-                string[] aliasPrix = { "market_cap", "cap", "market", "market_capitalisation", "capitalisation" };
                 try
                 {
                     string extension = Path.GetExtension(choiceDialog.FileName).ToLower();
@@ -180,57 +176,16 @@ namespace PlotThoseLines
                         var lines = File.ReadAllLines(choiceDialog.FileName);
 
                         string[] headers = lines.First().Split(',');
-
-                        int colIndex = Array.FindIndex(headers, col => aliasPrix.Contains(col.Trim(), StringComparer.OrdinalIgnoreCase));
-                        int dateIndex = Array.FindIndex(headers, col => aliasDate.Contains(col.Trim(), StringComparer.OrdinalIgnoreCase));
-
-                        // Tableau d'en-têtes est parcouru, pour trouver les colonnes nécessaires.
-
-                        if (colIndex == -1)
-                            throw new InvalidDataException("Colonne de prix est introuvable dans ce fichier.");
-
-                        points = lines
-                        .Skip(1)
-                        .Where(line => !string.IsNullOrWhiteSpace(line)) // ignorer les lignes vides
-                        .Select(line => line.Split(',')) // Découpe la ligne par virgule 
-                        .Where(cols => cols.Length > Math.Max(colIndex, dateIndex)) // s'assurer que les indexes éxistent
-                        .Select(cols => {
-                            // Convertit le texte en une DateTime
-                            bool dateOk = DateTime.TryParse(cols[dateIndex].Trim(), out DateTime dt);
-
-                            // Convertit le texte en un nombre décimal (cultureInfo sert à utiliser les règles de formatage fixe)
-                            bool valOk = double.TryParse(cols[colIndex].Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out double val);
-
-                            return dateOk && valOk ? new DataPoint<double>(dt, val) : null;
-
-                        })
-                        .Where(point => point is not null) // Filtre les points valides
-                        .Select(point => point!).ToList(); // Instancie les points
                         
-
-                        // Création de la DataSerie
-                        DataSerie<double> serie = DataSerie<double>.From(serieName, points);
+                        // Appeler la classe Parser pour obtenir et valider les points 
+                        List<SavedPoint> nouveauxPoints = Parser.Parse(lines);
 
                         // Retrouve la série existante
                         SavedSerie? serieExistante = savedSeries.FirstOrDefault(s => s.Name == companyAcronym);
 
-                        // Créer l'objets qui sera sauvegardé dans le JSON
-                        List<SavedPoint> nouveauxPoints = points
-                            .Select(p => new SavedPoint
-                            {
-                                Timestamp = p.Timestamp,
-                                Value = p.Value
-                            })
-                            .ToList();
-
-                        if (nouveauxPoints.Count == 0)
-                        {
-                            throw new InvalidDataException(
-                            "Le fichier ne contient aucun point valide.");
-                        }
-
                         if (serieExistante is null)
                         {
+                            // Créer l'objet qui sera sauvegardé dans le JSON
                             SavedSerie nouvelleSerie = new SavedSerie
                             {
                                 Name = companyAcronym,
@@ -269,12 +224,13 @@ namespace PlotThoseLines
                             AddSerieToPlot(serieExistante);
                         }
 
+                        // Configurer l'axe du bas pour les dates
                         plot.Plot.Axes.DateTimeTicksBottom();
 
-                        // Légende
-                        if (dateIndex != -1)
-                            plot.Plot.XLabel(headers[dateIndex].Trim());
-                        
+                        // Réappliquer les légendes des axes
+                        plot.Plot.XLabel("Date");
+                        plot.Plot.YLabel("Capitalisation boursière en US$");
+
                     }
                     SaveData();
 
