@@ -1,22 +1,36 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\",
+  "WorkspaceRootPath": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\user\\documents\\github\\plotthoselines\\src\\services\\seriesmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:services\\seriesmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\user\\documents\\github\\plotthoselines\\src\\services\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:services\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\plotthoselines.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:plotthoselines.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\user\\documents\\github\\plotthoselines\\src\\services\\numbertransformator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A4FAFAB9-20B2-40C2-B698-0C8278797480}|..\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\plotthoselines.tests\\plotthoselines.tests.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\services\\numbertransformator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:services\\numbertransformator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\user\\documents\\github\\plotthoselines\\src\\mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:mainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A4FAFAB9-20B2-40C2-B698-0C8278797480}|..\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\plotthoselines.tests\\numbertransformatortests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\services\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:services\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\services\\seriesmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:services\\seriesmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,15 +40,67 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
+              "Title": "PlotThoseLines.Tests",
+              "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj",
+              "RelativeDocumentMoniker": "..\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj",
+              "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj",
+              "RelativeToolTip": "..\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-26T08:01:57.863Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "NumberTransformatorTests.cs",
+              "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\PlotThoseLines.Tests\\NumberTransformatorTests.cs",
+              "RelativeDocumentMoniker": "..\\PlotThoseLines.Tests\\NumberTransformatorTests.cs",
+              "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\PlotThoseLines.Tests\\NumberTransformatorTests.cs",
+              "RelativeToolTip": "..\\PlotThoseLines.Tests\\NumberTransformatorTests.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T08:02:43.456Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwA0AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-26T07:47:07.738Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "PlotThoseLines",
+              "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\PlotThoseLines.csproj",
+              "RelativeDocumentMoniker": "PlotThoseLines.csproj",
+              "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\PlotThoseLines.csproj",
+              "RelativeToolTip": "PlotThoseLines.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-10-26T07:08:34.918Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "SeriesMerge.cs",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\services\\SeriesMerge.cs",
+              "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\services\\SeriesMerge.cs",
               "RelativeDocumentMoniker": "services\\SeriesMerge.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\services\\SeriesMerge.cs",
+              "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\services\\SeriesMerge.cs",
               "RelativeToolTip": "services\\SeriesMerge.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -43,24 +109,24 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "NumberTransformator.cs",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\services\\NumberTransformator.cs",
+              "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\services\\NumberTransformator.cs",
               "RelativeDocumentMoniker": "services\\NumberTransformator.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\services\\NumberTransformator.cs",
+              "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\services\\NumberTransformator.cs",
               "RelativeToolTip": "services\\NumberTransformator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-25T19:31:17.16Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 6,
               "Title": "Parser.cs",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\services\\Parser.cs",
+              "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\services\\Parser.cs",
               "RelativeDocumentMoniker": "services\\Parser.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\services\\Parser.cs",
+              "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\services\\Parser.cs",
               "RelativeToolTip": "services\\Parser.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAAApAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -69,13 +135,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "MainForm.cs",
-              "DocumentMoniker": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\MainForm.cs",
+              "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\MainForm.cs",
               "RelativeDocumentMoniker": "MainForm.cs",
-              "ToolTip": "C:\\Users\\user\\Documents\\GitHub\\PlotThoseLines\\src\\MainForm.cs",
+              "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\MainForm.cs",
               "RelativeToolTip": "MainForm.cs",
-              "ViewState": "AgIAAHIBAAAAAAAAAAAcwI8BAAAiAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-20T10:03:26.893Z",
               "EditorCaption": ""

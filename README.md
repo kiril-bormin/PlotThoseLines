@@ -1,4 +1,4 @@
-<img src="data/assets/logo.png" alt="Logo" width="600" />
+<img src="docs/logo.png" alt="Logo" width="600" />
 
 Logiciel simple permettant de visualiser des données de capitalisation boursière des entreprises mondiales.
 
