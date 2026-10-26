@@ -18,8 +18,6 @@ namespace PlotThoseLines
 
         // Chemin de fichier (AppData/Local/PlotThoseLines/data.json)
         private readonly string savePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"PlotThoseLines", "data.json"); 
-
-        private bool isLoadingData = false;
         public MainForm()
         {
             InitializeComponent();
@@ -253,7 +251,6 @@ namespace PlotThoseLines
 
             plot.Plot.Axes.AutoScale();
             plot.Refresh();
-            if (!isLoadingData)
                 SaveData();
         }
         // Sauvegarde des données en json
@@ -280,9 +277,6 @@ namespace PlotThoseLines
                 return;
             try
             {
-                // Évite de sauvegarder pendant le chargement
-                isLoadingData = true;
-
                 // Lire le contenu du fichier
                 string json = File.ReadAllText(savePath);
 
@@ -313,11 +307,6 @@ namespace PlotThoseLines
             catch (Exception ex)
             {
                 MessageBox.Show($"Erreur lors du chargement des données :\n{ex.Message}","Erreur",MessageBoxButtons.OK,MessageBoxIcon.Error);
-            }
-            finally
-            {
-                // Le chargement est terminé
-                isLoadingData = false;
             }
         }
         // Rajout des séries sur le graph
