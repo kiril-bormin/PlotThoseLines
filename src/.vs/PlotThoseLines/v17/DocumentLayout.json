@@ -6,14 +6,14 @@
       "AbsoluteMoniker": "D:0:0:{A4FAFAB9-20B2-40C2-B698-0C8278797480}|..\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\plotthoselines.tests\\seriesmergetests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A4FAFAB9-20B2-40C2-B698-0C8278797480}|..\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\plotthoselines.tests\\parsertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\services\\seriesmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|solutionrelative:services\\seriesmerge.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A4FAFAB9-20B2-40C2-B698-0C8278797480}|..\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\plotthoselines.tests\\numbertransformatortests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A4FAFAB9-20B2-40C2-B698-0C8278797480}|..\\PlotThoseLines.Tests\\PlotThoseLines.Tests.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\plotthoselines.tests\\parsertests.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{DC91CFDC-EA34-4917-8AC4-0CFD0913EEA1}|PlotThoseLines.csproj|c:\\users\\px20umf\\documents\\github\\plotthoselines\\src\\services\\parser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -68,14 +68,14 @@
               "RelativeDocumentMoniker": "..\\PlotThoseLines.Tests\\SeriesMergeTests.cs",
               "ToolTip": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\PlotThoseLines.Tests\\SeriesMergeTests.cs",
               "RelativeToolTip": "..\\PlotThoseLines.Tests\\SeriesMergeTests.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAxAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAOAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-10-26T09:41:43.665Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "ParserTests.cs",
               "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\PlotThoseLines.Tests\\ParserTests.cs",
               "RelativeDocumentMoniker": "..\\PlotThoseLines.Tests\\ParserTests.cs",
@@ -138,7 +138,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "NumberTransformatorTests.cs",
               "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\PlotThoseLines.Tests\\NumberTransformatorTests.cs",
               "RelativeDocumentMoniker": "..\\PlotThoseLines.Tests\\NumberTransformatorTests.cs",
@@ -177,7 +177,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "SeriesMerge.cs",
               "DocumentMoniker": "C:\\Users\\px20umf\\Documents\\github\\PlotThoseLines\\src\\services\\SeriesMerge.cs",
               "RelativeDocumentMoniker": "services\\SeriesMerge.cs",
